@@ -112,7 +112,6 @@ public enum Command {
             case let .printer(id):
                 return [29, 73, id.rawValue]
             case .transmitStatus:
-                debugPrint("⚠️ TODO://")
                 return [29, 114, 0]
             case .transmitPaperSensorStatus:
                 return [27, 118]
@@ -165,7 +164,6 @@ public enum Command {
             case .fullCut:
                 return [27, 109]
             case .ejector:
-                debugPrint("⚠️ TODO://")
                 return []
             case .print:
                 // 0 will be ignored

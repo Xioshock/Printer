@@ -74,8 +74,6 @@ dummyPrinter.write(ticket)
 
 ### Receipt
 
-[TODO]
-
 ### Notes
 
 * Send data to your own Bluetooth Manager is possible
