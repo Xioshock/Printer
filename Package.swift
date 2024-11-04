@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:6.0
 //  Package.swift
 //  Printer
 //
@@ -10,7 +10,7 @@ import PackageDescription
 
 let package = Package(
     name: "Printer",
-    platforms: [.iOS(.v9)],
+    platforms: [.iOS(.v17)],
     products: [
         .library(
             name: "Printer",

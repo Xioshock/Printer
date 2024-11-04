@@ -26,8 +26,8 @@ private extension CBPeripheral {
     }
 }
 
-public struct BluetoothPrinter {
-    public enum State {
+public struct BluetoothPrinter: Sendable {
+    public enum State: Sendable {
         case disconnected
         case connecting
         case connected
@@ -50,7 +50,7 @@ public struct BluetoothPrinter {
     }
 }
 
-public enum NearbyPrinterChange {
+public enum NearbyPrinterChange: Sendable {
     case add(BluetoothPrinter)
     case update(BluetoothPrinter)
     case remove(UUID) // identifier
@@ -61,13 +61,11 @@ public protocol PrinterManagerDelegate: NSObjectProtocol {
 }
 
 public extension BluetoothPrinterManager {
-    static var specifiedServices: Set<String> = ["E7810A71-73AE-499D-8C15-FAA9AEF0C3F2"]
-    static var specifiedCharacteristics: Set<String>?
+    nonisolated(unsafe) static var specifiedServices: Set<String> = ["E7810A71-73AE-499D-8C15-FAA9AEF0C3F2"]
+    nonisolated(unsafe) static var specifiedCharacteristics: Set<String>?
 }
 
-public class BluetoothPrinterManager {
-    public var updateHandler: (() -> Void)?
-
+public final class BluetoothPrinterManager {
     private let queue = DispatchQueue(label: "com.kevin.gong.printer")
 
     private let centralManager: CBCentralManager
@@ -164,16 +162,11 @@ public class BluetoothPrinterManager {
     }
 
     private func nearbyPrinterDidChange(_ change: NearbyPrinterChange) {
-        DispatchQueue.main.async { [weak self] in
-            self?.delegate?.nearbyPrinterDidChange(change)
-            self?.updateHandler?()
-        }
+        delegate?.nearbyPrinterDidChange(change)
     }
 
     private func deliverError(_ error: PError) {
-        DispatchQueue.main.async { [weak self] in
-            self?.errorReport?(error)
-        }
+        errorReport?(error)
     }
 
     public func startScan() -> PError? {

@@ -46,7 +46,7 @@ public class BluetoothPrinterSelectTableViewController: UITableViewController {
         cell.accessoryType = printer.state == .connected ? .checkmark : .none
 
         if printer.isConnecting {
-            let v = UIActivityIndicatorView(style: .gray)
+            let v = UIActivityIndicatorView(style: .medium)
             v.startAnimating()
             cell.accessoryView = v
         } else {
@@ -77,7 +77,7 @@ public class BluetoothPrinterSelectTableViewController: UITableViewController {
     }
 }
 
-extension BluetoothPrinterSelectTableViewController: PrinterManagerDelegate {
+extension BluetoothPrinterSelectTableViewController: @preconcurrency PrinterManagerDelegate {
     public func nearbyPrinterDidChange(_ change: NearbyPrinterChange) {
         tableView.beginUpdates()
 
